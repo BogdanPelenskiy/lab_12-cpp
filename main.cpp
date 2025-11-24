@@ -5,48 +5,50 @@
 using namespace std;
 
 int main() {
-    setlocale(LC_ALL, "uk_UA.UTF-8");
+setlocale(LC_ALL, "uk_UA.UTF-8");
 
-    int n;
-    while (true) {
-        cout << "Введіть кількість об'єктів часу: ";
-        if (cin >> n && n > 0) break;
-        cout << "❌ Помилка! Введіть додатнє ціле число.\n";
-        cin.clear();
-        cin.ignore(10000, '\n');
-    }
+int n;
+while (true) {
+cout << "Введіть кількість об'єктів часу: ";
+if (cin >> n && n > 0) break;
+cout << "❌ Помилка! Введіть додатнє ціле число.\n";
+cin.clear();
+cin.ignore(10000, '\n');
+}
 
-    vector<Time> arr(n);
-    cout << "\n--- Введення часу ---\n";
-    for (int i = 0; i < n; i++) {
-        cout << "\nЧас #" << i + 1 << endl;
-        cin >> arr[i];
-    }
+vector<Time> arr(n);
 
-    sort(arr.begin(), arr.end(), [](const Time& a, const Time& b) {
-        return a > b;
-    });
+cout << "\n--- Введення часу ---\n";
+for (int i = 0; i < n; i++) {
+cout << "\nЧас #" << i + 1 << endl;
+cin >> arr[i];
+}
 
-    cout << "\nВідсортований масив (за спаданням):\n";
-    for (auto& t : arr)
-        cout << t << endl;
+// сортування (циклічне)
+sort(arr.begin(), arr.end(), [](const Time& a, const Time& b) {
+return a > b; // враховує циклічну логіку
+});
 
-    int k;
-    while (true) {
-        cout << "\nВведіть кількість секунд, на яку зменшити кожен час: ";
-        if (cin >> k && k >= 0) break;
+cout << "\nВідсортований масив (за циклічною відстанню):\n";
+for (auto& t : arr)
+cout << t << endl;
 
-        cout << "❌ Помилка! Кількість секунд має бути невід’ємним числом.\n";
-        cin.clear();
-        cin.ignore(10000, '\n');
-    }
+int k;
+while (true) {
+cout << "\nВведіть кількість секунд, на яку зменшити кожен час: ";
+if (cin >> k && k >= 0) break;
 
-    for (auto& t : arr)
-        t -= k;
+cout << "❌ Помилка! Кількість секунд має бути невід’ємним числом.\n";
+cin.clear();
+cin.ignore(10000, '\n');
+}
 
-    cout << "\nМасив після зменшення:\n";
-    for (auto& t : arr)
-        cout << t << endl;
+for (auto& t : arr)
+t -= k;
 
-    return 0;
+cout << "\nМасив після циклічного зменшення:\n";
+for (auto& t : arr)
+cout << t << endl;
+
+return 0;
 }
